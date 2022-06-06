@@ -1,9 +1,8 @@
 import { TaskInput, TaskOutput } from './../../db/models/Task';
-import * as taskController from '../../db/controller/task';
+import * as taskController from '../controller/task';
 import { getReverseGeocoding } from '../../utils/geocoding';
 
-async function isInValidCountry(latitude: number, longitude: number): Promise<boolean> {
-    // check with google api
+export const isValidCountry = async (latitude: number, longitude: number): Promise<boolean> => {
     const { data } = await getReverseGeocoding(latitude, longitude);
 
     if (data?.[0].country === 'Brazil' || data?.[0].country === 'Angola') {
@@ -14,8 +13,8 @@ async function isInValidCountry(latitude: number, longitude: number): Promise<bo
 }
 
 export const create = async (payload: TaskInput): Promise<TaskOutput> => {
-    if (!(await isInValidCountry(payload.latitude, payload.longitude))) {
-        throw new Error();
+    if (!(await isValidCountry(payload.latitude, payload.longitude))) {
+        return Promise.reject(new Error('Internal Server Error'));
     }
 
     return taskController.create(payload);

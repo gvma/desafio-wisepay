@@ -7,7 +7,7 @@ export async function getReverseGeocoding(latitude: number, longitude: number): 
             res = response.data;
         }).catch((error: any) => {
             console.log(error);
-            throw new Error('Internal Server Error');
+            return Promise.reject(new Error('Internal Server Error'));
         });
 
     return res;
