@@ -1,9 +1,12 @@
 import express, { Application, Request, Response } from 'express'
 import routes from './api/routes';
+import dbInit from './db/init';
 require('dotenv').config();
 
 const app: Application = express()
 const port = 3000
+
+dbInit();
 
 // Body parsing Middleware
 app.use(express.json());
@@ -20,3 +23,5 @@ try {
 } catch (error) {
     console.log(`Error occurred: ${error}`)
 }
+
+export default app;

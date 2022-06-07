@@ -1,37 +1,31 @@
-import { TaskInput, TaskOutput } from './../../db/models/Task';
-import * as taskController from '../controller/task';
-import { getReverseGeocoding } from '../../utils/geocoding';
+// import { TaskInput, TaskOutput } from './../../db/models/Task';
+// import * as taskController from '../repository/task';
+// import { getReverseGeocoding } from '../../utils/geocoding';
+// import { TaskRepository } from '../repository/taskRepository';
 
-export const isValidCountry = async (latitude: number, longitude: number): Promise<boolean> => {
-    const { data } = await getReverseGeocoding(latitude, longitude);
+// export const create = async (payload: TaskInput): Promise<TaskOutput> => {
+//     if (!(await isValidCountry(payload.latitude, payload.longitude))) {
+//         return Promise.reject(new Error('Internal Server Error'));
+//     }
 
-    if (data?.[0].country === 'Brazil' || data?.[0].country === 'Angola') {
-        return true;
-    }
+//     return taskRepository.create(payload);
+// }
 
-    return false;
-}
+// export const getById = async (id: string): Promise<TaskOutput> => {
+//     return taskRepository.getById(id);
+// }
 
-export const create = async (payload: TaskInput): Promise<TaskOutput> => {
-    if (!(await isValidCountry(payload.latitude, payload.longitude))) {
-        return Promise.reject(new Error('Internal Server Error'));
-    }
+// export const update = async (id: string, payload: TaskInput): Promise<TaskOutput> => {
+//     if (!(await isValidCountry(payload.latitude, payload.longitude))) {
+//         return Promise.reject(new Error('Internal Server Error'));
+//     }
+//     return taskRepository.update(id, payload);
+// }
 
-    return taskController.create(payload);
-}
+// export const deleteById = async (id: string): Promise<number> => {
+//     return taskRepository.deleteById(id);
+// }
 
-export const getById = (id: string): Promise<TaskOutput> => {
-    return taskController.getById(id);
-}
-
-export const update = (id: string, payload: TaskInput): Promise<TaskOutput> => {
-    return taskController.update(id, payload);
-}
-
-export const deleteById = (id: string): Promise<number> => {
-    return taskController.deleteById(id);
-}
-
-export const getAll = (): Promise<TaskInput[]> => {
-    return taskController.getAll();
-}
+// export const getAll = async (): Promise<TaskInput[]> => {
+//     return taskRepository.getAll();
+// }

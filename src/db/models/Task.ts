@@ -2,7 +2,7 @@ import { DataTypes, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
 
 interface TaskAttributes {
-    id: string,
+    id?: string,
     title: string,
     description: string,
     latitude: number,
@@ -50,11 +50,11 @@ Task.init({
         allowNull: false,
     },
     longitude: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.FLOAT,
         allowNull: false,
     },
     latitude: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.FLOAT,
         allowNull: false,
     }
 }, {

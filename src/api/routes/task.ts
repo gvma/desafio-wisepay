@@ -1,12 +1,20 @@
-import { create, getById, update, deleteById, getAll } from '../services/task.services';
+import { GetAllTasks } from './../usecases/getAllTasks/getAllTasks';
+import { DeleteTaskById } from './../usecases/deleteTaskById/deleteTaskById';
+import { UpdateTask } from './../usecases/updateTask/updateTask';
+import { GetTaskById } from './../usecases/getTaskById/getTaskById';
 import { Router, Request, Response } from 'express';
+import { CreateTask } from '../usecases/createTask/createTask';
+import { TaskRepository } from '../repository/taskRepository';
 
 const tasksRouter = Router();
+
+const taskRepository = new TaskRepository();
 
 tasksRouter.post('/', async (req: Request, res: Response) => {
     try {
         const payload = req.body;
-        const task = await create(payload);
+        const createTask = new CreateTask(taskRepository);
+        const task = await createTask.execute(payload);
         return res.status(200).send(task);
     } catch (error) {
         return res.status(500).send(error);
@@ -16,7 +24,8 @@ tasksRouter.post('/', async (req: Request, res: Response) => {
 tasksRouter.get('/:id', async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
-        const task = await getById(id);
+        const getTaskById = new GetTaskById(taskRepository);
+        const task = await getTaskById.execute(id);
         return res.status(200).send(task);
     } catch (error) {
         return res.status(500).send(error);
@@ -27,7 +36,8 @@ tasksRouter.put('/:id', async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const payload = req.body;
-        const task = await update(id, payload);
+        const updateTask = new UpdateTask(taskRepository);
+        const task = await updateTask.execute(id, payload);
         return res.status(200).send(task);
     } catch (error) {
         return res.status(500).send(error);
@@ -37,7 +47,8 @@ tasksRouter.put('/:id', async (req: Request, res: Response) => {
 tasksRouter.delete('/:id', async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
-        const status = await deleteById(id);
+        const deleteTaskById = new DeleteTaskById(taskRepository);
+        const status = await deleteTaskById.execute(id);
         return res.status(status).send();
     } catch (error) {
         return res.status(500).send(error);
@@ -46,7 +57,8 @@ tasksRouter.delete('/:id', async (req: Request, res: Response) => {
 
 tasksRouter.get('/', async (req: Request, res: Response) => {
     try {
-        const tasks = await getAll();
+        const getAllTasks = new GetAllTasks(taskRepository);
+        const tasks = await getAllTasks.execute();
         return res.status(200).send(tasks);
     } catch (error) {
         return res.status(500).send(error);
