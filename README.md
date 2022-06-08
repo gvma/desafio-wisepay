@@ -5,6 +5,7 @@
     4 - Criar 2 bancos de dados, um para dev e outro para teste no postgres com os seguintes dados respectivamente:
         - Nome: wise-pay-dev e wise-pay-test;
         - Owner: postgres (com todos os grants);
+    5 - Ajustar o .env do projeto com as credenciais do usuário do seu banco
 
 # Rodando o projeto
     - Existem 1 comando básico para rodar o projeto: npm run dev
