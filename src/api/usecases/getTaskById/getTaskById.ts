@@ -8,7 +8,7 @@ export class GetTaskById {
         this.taskRepository = taskRepository;
     }
 
-    async execute(id: string): Promise<TaskOutput | undefined> {
+    async execute(id: string): Promise<TaskOutput | null> {
         return this.taskRepository.getById(id);
     }
 }

@@ -9,33 +9,17 @@ export class TaskRepository implements ITaskRepository {
     async create(payload: TaskInput): Promise<TaskOutput> {
         payload.id = uuidv4();
         const task = await Task.create(payload);
-        if (!task) {
-            return Promise.reject(new Error('Internal Server Error'));
-        }
-        
         return task;
     };
     
-    async getById(id: string): Promise<TaskOutput> {
+    async getById(id: string): Promise<TaskOutput | null> {
         const task = await Task.findByPk(id);
-        if (!task) {
-            return Promise.reject(new Error('Internal Server Error'));
-        }
-    
         return task;
     };
     
     async update(id: string, payload: Partial<TaskInput>): Promise<TaskOutput> {
-        const task = await Task.findByPk(id);
-        if (!task) {
-            return Promise.reject(new Error('Internal Server Error'));
-        }
-    
+        const task = await Task.findByPk(id);    
         const updatedTask = await (task as Task).update(payload);
-        if (!updatedTask) {
-            return Promise.reject(new Error('Internal Server Error'));
-        }
-    
         return updatedTask;
     }
     
@@ -47,18 +31,13 @@ export class TaskRepository implements ITaskRepository {
         });
     
         if (!deletedTaskCount) {
-            return Promise.reject(new Error('Internal Server Error'));
+            return 404;
         }
     
         return 204;
     }
     
     async getAll(): Promise<TaskOutput[]> {
-        const tasks = await Task.findAll();
-        if (!tasks) {
-            return Promise.reject(new Error('Internal Server Error'));
-        }
-        
-        return tasks;
+        return await Task.findAll();
     }
 }

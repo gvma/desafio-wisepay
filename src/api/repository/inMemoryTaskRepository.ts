@@ -18,8 +18,9 @@ export class InMemoryTaskRepository implements ITaskRepository {
         return task;
     };
     
-    async getById(id: string): Promise<TaskOutput | undefined> {
-        return this.tasks.find((element) => element.id === id);
+    async getById(id: string): Promise<TaskOutput | null> {
+        const task = this.tasks.find((element) => element.id === id);
+        return task !== undefined ? task : null;
     };
     
     async update(id: string, payload: Partial<TaskInput>): Promise<TaskOutput | undefined> {
