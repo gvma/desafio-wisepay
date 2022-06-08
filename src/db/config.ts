@@ -19,7 +19,13 @@ if (process.env.ENVIRONMENT === 'dev') {
 	const dbPassword = '17c3d91644cb7ac127e7931b38c5df78eeb3fac75e1f73b919bcd56a5214eef6';
 	sequelizeConnection = new Sequelize(dbName, dbUser, dbPassword, {
 		host: dbHost,
-		dialect: 'postgres'
+		dialect: 'postgres',
+		dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
+     },
 	})
 }
 
