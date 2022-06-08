@@ -1,7 +1,4 @@
 import { InMemoryTaskRepository } from '../../repository/inMemoryTaskRepository';
-import { ITaskRepository } from '../../repository/task';
-import Task from '../../../db/models/Task';
-import * as reverseGeocoding from '../../../utils/geocoding';
 import { GetTaskById } from './getTaskById';
 require('dotenv').config();
 
@@ -50,6 +47,6 @@ describe('GetById method', () => {
 
     it('Should throw an error when returning no Task', async () => {
         const task = await taskService.execute('e48029ac-3bff-4f2e-b9a8-e03ebf9dd13a');
-        expect(task).toBeUndefined;
+        expect(task).toBeNull();
     });
 });

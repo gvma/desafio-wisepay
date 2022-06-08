@@ -1,13 +1,7 @@
 import { TaskOutput } from '../../../db/models/Task';
-import { ITaskRepository } from '../../repository/task';
+import { UseCase } from '../useCase';
 
-export class GetAllTasks {
-    taskRepository: ITaskRepository;
-    
-    constructor(taskRepository: ITaskRepository) {
-        this.taskRepository = taskRepository;
-    }
-
+export class GetAllTasks extends UseCase<undefined, TaskOutput[]> {
     async execute(): Promise<TaskOutput[]> {
         return this.taskRepository.getAll();
     }

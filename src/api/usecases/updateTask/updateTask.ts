@@ -1,19 +1,13 @@
 import { isValidCountry } from '../../../utils/geocoding';
 import { TaskInput, TaskOutput } from '../../../db/models/Task';
-import { ITaskRepository } from '../../repository/task';
+import { UseCase } from '../useCase';
 
-export class UpdateTask {
-    taskRepository: ITaskRepository;
-
-    constructor(taskRepository: ITaskRepository) {
-        this.taskRepository = taskRepository;
-    }
-
-    async execute(id: string, payload: TaskInput): Promise<TaskOutput | undefined> {
+export class UpdateTask extends UseCase<TaskInput, TaskOutput | null> {
+    async execute(payload: TaskInput): Promise<TaskOutput | null> {
         if (!(await isValidCountry(payload.latitude, payload.longitude))) {
             return Promise.reject(new Error('Internal Server Error'));
         }
         
-        return this.taskRepository.update(id, payload);
+        return this.taskRepository.update(payload);
     }
 }

@@ -45,7 +45,7 @@ describe('Update method', () => {
             date
         };
 
-        const task = await taskService.execute(id, expectedTask)!;
+        const task = await taskService.execute(expectedTask)!;
 
         expect(spyIsValidCountry).toHaveBeenCalled();
         expect(task).toEqual(expectedTask);
@@ -64,17 +64,17 @@ describe('Update method', () => {
             date
         };
 
-        const task = await taskService.execute(id, expectedTask)!;
+        const task = await taskService.execute(expectedTask);
 
         expect(spyIsValidCountry).toHaveBeenCalled();
         expect(task).toEqual(expectedTask);
     });
 
-    it('Should return a task with updated values for Angola allowed coordinates', async () => {
+    it('Should return null since the id does not exist', async () => {
         const spyIsValidCountry = jest.spyOn(reverseGeocoding, 'isValidCountry').mockResolvedValue(true);
 
         const anyTask = {
-            id,
+            'id': 'cf3fccaa-3cb3-4809-b683-fa0b0fa3dbb3',
             'title': 'Titulo editado',
             'description': 'Descricao editada',
             'latitude': angolaCoordinatesMock.latitude,
@@ -83,10 +83,10 @@ describe('Update method', () => {
             date
         };
 
-        const task = await taskService.execute('cf3fccaa-3cb3-4809-b683-fa0b0fa3dbb3', anyTask)!;
+        const task = await taskService.execute(anyTask)!;
 
         expect(spyIsValidCountry).toHaveBeenCalled();
-        expect(task).toBeUndefined;
+        expect(task).toBeNull();
     });
 
     it('Should return an error for USA\'s not allowed coordinates', async () => {
@@ -102,7 +102,7 @@ describe('Update method', () => {
             date
         };
 
-        await (expect(taskService.execute(id, expectedTask))).rejects.toThrow(new Error('Internal Server Error'));
+        await (expect(taskService.execute(expectedTask))).rejects.toThrow(new Error('Internal Server Error'));
         expect(spyIsValidCountry).toHaveBeenCalled();
     });
 })

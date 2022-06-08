@@ -1,13 +1,6 @@
-import { TaskOutput } from '../../../db/models/Task';
-import { ITaskRepository } from '../../repository/task';
+import { UseCase } from '../useCase';
 
-export class DeleteTaskById {
-    taskRepository: ITaskRepository;
-    
-    constructor(taskRepository: ITaskRepository) {
-        this.taskRepository = taskRepository;
-    }
-
+export class DeleteTaskById extends UseCase<string, number> {
     async execute(id: string): Promise<number> {
         return this.taskRepository.deleteById(id);
     }

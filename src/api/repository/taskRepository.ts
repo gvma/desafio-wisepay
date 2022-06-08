@@ -17,8 +17,8 @@ export class TaskRepository implements ITaskRepository {
         return task;
     };
     
-    async update(id: string, payload: Partial<TaskInput>): Promise<TaskOutput> {
-        const task = await Task.findByPk(id);    
+    async update(payload: Partial<TaskInput>): Promise<TaskOutput> {
+        const task = await Task.findByPk(payload.id);    
         const updatedTask = await (task as Task).update(payload);
         return updatedTask;
     }

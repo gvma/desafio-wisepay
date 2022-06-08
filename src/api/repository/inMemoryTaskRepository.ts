@@ -23,14 +23,14 @@ export class InMemoryTaskRepository implements ITaskRepository {
         return task !== undefined ? task : null;
     };
     
-    async update(id: string, payload: Partial<TaskInput>): Promise<TaskOutput | undefined> {
-        let task = await this.getById(id);
+    async update(payload: Partial<TaskInput>): Promise<TaskOutput | null> {
+        let task = await this.getById(payload.id!);
         if (!task) {
-            return undefined;
+            return null;
         }
         
         this.tasks.forEach((element) => {
-            if (element.id === id) {
+            if (element.id === payload.id) {
                 element.title = payload.title!;
                 element.description = payload.description!;
                 element.latitude = payload.latitude!;

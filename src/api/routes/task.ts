@@ -34,10 +34,10 @@ tasksRouter.get('/:id', async (req: Request, res: Response) => {
 
 tasksRouter.put('/:id', async (req: Request, res: Response) => {
     try {
-        const id = req.params.id;
         const payload = req.body;
+        payload.id = req.params.id;
         const updateTask = new UpdateTask(taskRepository);
-        const task = await updateTask.execute(id, payload);
+        const task = await updateTask.execute(payload);
         return res.status(200).send(task);
     } catch (error) {
         return res.status(500).send(error);
