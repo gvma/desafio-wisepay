@@ -5,7 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "test": "jest --coverage",
-    "dev": "nodemon ./src/index.ts"
+    "dev": "nodemon ./src/index.ts",
+    "build": "tsc -p .",
+    "start": "ts-node dist/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,7 +22,7 @@
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/jest": "^28.1.1",
-    "@types/node": "^17.0.39",
+    "@types/node": "^17.0.41",
     "@types/supertest": "^2.0.12",
     "@types/uuid": "^8.3.4",
     "eslint": "^8.17.0",

@@ -4,7 +4,7 @@ import dbInit from './db/init';
 require('dotenv').config();
 
 const app: Application = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 const host = process.env.HOST;
 
 dbInit();
